@@ -1,0 +1,8 @@
+---
+  - id: dockfmt
+    name: dockfmt
+    description: Format Dockerfiles using dockfmt without needing docker or system installation
+    entry: dockfmt
+    language: python
+    types:
+      - dockerfile
