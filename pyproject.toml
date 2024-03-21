@@ -1,0 +1,76 @@
+[build-system]
+requires = ["hatchling", "hatch-build-scripts"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dockfmt-py"
+description = "Making dockfmt pip installable (https://github.com/jessfraz/dockfmt)"
+readme = "README.md"
+requires-python = "~=3.10"
+license = "MIT"
+authors = [
+  { name = "Shuhei Nitta", email = "huisintheta@gmail.com" }
+]
+# keywords = []
+# classifiers = []
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/huisint/dockfmt-py"
+Homepage = "https://github.com/huisint/dockfmt-py"
+Repository = "https://github.com/huisint/dockfmt-py"
+
+[project.optional-dependencies]
+test = [
+  "mypy==1.9.0",
+  "pytest==8.1.1",
+  "pytest-cov==4.1.0",
+  "pytest-describe==2.2.0",
+  "pytest-mock==3.12.0",
+]
+
+[tool.hatch.version]
+path = "src/dockfmt_py/__init__.py"
+
+[[tool.hatch.build.hooks.build-scripts.scripts]]
+out_dir = "out"
+commands = [
+    "python src/dockfmt_py/__init__.py",
+]
+artifacts = [
+    "dockfmt",
+    "dockfmt.exe",
+]
+
+[tool.hatch.envs.default]
+features = ["test"]
+
+[tool.hatch.envs.default.scripts]
+test = "pytest --cov-report=term-missing:skip-covered src tests {args}"
+test-doc = "pytest --doctest-modules src {args}"
+check-type = "mypy src tests {args}"
+
+[tool.hatch.envs.doc]
+dependencies = []
+
+[tool.hatch.envs.doc.scripts]
+
+[tool.mypy]
+strict = true
+sqlite_cache = true
+
+[[tool.mypy.overrides]]
+module = []
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=dockfmt_py"
+
+[tool.ruff]
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+]
